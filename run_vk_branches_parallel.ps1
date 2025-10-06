@@ -104,14 +104,28 @@ if (`$LASTEXITCODE -ne 0) {
     exit 1
 }
 
+# Get commit information
+`$commitHash = git rev-parse --short HEAD
+`$commitMessage = (git log -1 --pretty=%B) -replace '"', '\\"' -replace "``n", " " -replace "``r", ""
+`$commitMessage = `$commitMessage.Substring(0, [Math]::Min(`$commitMessage.Length, 500))
+`$commitAuthor = git log -1 --pretty=%an
+`$commitDate = git log -1 --pretty=%ad --date=format:'%Y-%m-%d %H:%M'
+
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Green
 Write-Host "STARTING APP FOR BRANCH: $branch" -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Green
+Write-Host "Commit: `$commitHash | `$commitAuthor" -ForegroundColor Cyan
+Write-Host "Message: `$commitMessage" -ForegroundColor Gray
 Write-Host ""
 
-# Run the app with branch name identification
-flutter run --dart-define=BRANCH_NAME=$branch
+# Run the app with branch name and commit info
+flutter run ``
+    --dart-define=BRANCH_NAME=$branch ``
+    --dart-define=COMMIT_HASH=`$commitHash ``
+    --dart-define=COMMIT_MESSAGE=`$commitMessage ``
+    --dart-define=COMMIT_AUTHOR=`$commitAuthor ``
+    --dart-define=COMMIT_DATE=`$commitDate
 
 Write-Host ""
 Write-Host "App stopped. Press any key to close this window..." -ForegroundColor Yellow

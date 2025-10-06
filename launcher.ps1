@@ -28,6 +28,10 @@ function Show-Menu {
     Write-Host ""
     Write-Host "  [5] Verificar requisitos del sistema" -ForegroundColor Green
     Write-Host ""
+    Write-Host "  [6] Ejecutar branch especifica" -ForegroundColor Magenta
+    Write-Host "      - Selecciona exactamente cual branch probar" -ForegroundColor Gray
+    Write-Host "      - Ver informacion completa del commit" -ForegroundColor Gray
+    Write-Host ""
     Write-Host "  [Q] Salir" -ForegroundColor Red
     Write-Host ""
     Write-Host "=============================================" -ForegroundColor Cyan
@@ -117,6 +121,16 @@ do {
             Write-Host ""
             Start-Sleep -Seconds 1
             & ".\check_requirements.ps1"
+        }
+        '6' {
+            Write-Host ""
+            Write-Host "Ejecutar branch especifica..." -ForegroundColor Magenta
+            Write-Host ""
+            Start-Sleep -Seconds 1
+            & ".\run_single_branch.ps1"
+            Write-Host ""
+            Write-Host "Presione cualquier tecla para volver al menu..." -ForegroundColor Gray
+            $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
         }
         'Q' {
             Write-Host ""

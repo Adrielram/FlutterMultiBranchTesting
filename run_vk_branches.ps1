@@ -67,19 +67,32 @@ foreach ($branch in $vkBranches) {
         continue
     }
     
-    # Run the app with branch name as app-id suffix
-    Write-Host "Running Flutter app for branch: $branch" -ForegroundColor $SuccessColor
-    Write-Host "App will be identified as: palestra-app-$($branch -replace '/', '-')" -ForegroundColor $SuccessColor
+    # Get commit information
+    $commitHash = git rev-parse --short HEAD
+    $commitMessage = (git log -1 --pretty=%B) -replace '"', '\"' -replace "`n", " " -replace "`r", ""
+    $commitMessage = $commitMessage.Substring(0, [Math]::Min($commitMessage.Length, 500))
+    $commitAuthor = git log -1 --pretty=%an
+    $commitDate = git log -1 --pretty=%ad --date=format:'%Y-%m-%d %H:%M'
+    
+    # Display commit info
+    Write-Host "Commit Info:" -ForegroundColor $InfoColor
+    Write-Host "  Hash: $commitHash" -ForegroundColor Gray
+    Write-Host "  Message: $commitMessage" -ForegroundColor Gray
+    Write-Host "  Author: $commitAuthor" -ForegroundColor Gray
+    Write-Host "  Date: $commitDate" -ForegroundColor Gray
     Write-Host ""
     
-    # Build and run in debug mode with custom flavor/app-id
-    # Using --dart-define to pass the branch name to the app
+    # Run the app with branch name and commit info
     Write-Host "Starting app... (Press Ctrl+C when you want to stop this instance)" -ForegroundColor $InfoColor
-    Write-Host "Branch identifier: $branch" -ForegroundColor $SuccessColor
     Write-Host ""
     
-    # Run the app with the branch name passed as a define
-    flutter run --dart-define=BRANCH_NAME=$branch
+    # Run the app with the branch name and commit info passed as defines
+    flutter run `
+        --dart-define=BRANCH_NAME=$branch `
+        --dart-define=COMMIT_HASH=$commitHash `
+        --dart-define=COMMIT_MESSAGE=$commitMessage `
+        --dart-define=COMMIT_AUTHOR=$commitAuthor `
+        --dart-define=COMMIT_DATE=$commitDate
     
     Write-Host ""
     Write-Host "Finished testing branch: $branch" -ForegroundColor $SuccessColor

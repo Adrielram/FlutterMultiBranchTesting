@@ -21,13 +21,19 @@ Eso es todo. El sistema automáticamente:
 Cuando ejecutes `.\launcher.ps1` verás:
 
 ```
-[1] Modo Secuencial   → Prueba un branch a la vez
-[2] Modo Paralelo     → Prueba todos los branches juntos
-[3] Ver branches      → Lista todos los branches vk/*
-[4] Actualizar repo   → git fetch --all
-[5] Verificar sistema → Check requisitos
+[1] Modo Secuencial      → Prueba un branch a la vez
+[2] Modo Paralelo        → Prueba todos los branches juntos
+[3] Ver branches         → Lista todos los branches vk/*
+[4] Actualizar repo      → git fetch --all
+[5] Verificar sistema    → Check requisitos
+[6] Branch específica ⭐  → Elige UNA branch para probar
 [Q] Salir
 ```
+
+**NUEVO**: La opción [6] te permite:
+- Seleccionar exactamente qué branch quieres probar
+- Ver información completa del commit (mensaje, autor, fecha, hash)
+- Testing enfocado sin distracciones
 
 ---
 
@@ -49,14 +55,24 @@ Cada vez que ejecutas, el sistema:
 
 ---
 
-## 📱 Ver el Branch en Tu App
+## 📱 Ver el Branch y Commit en Tu App
 
 Agrega este código a tu app Flutter:
 
 ```dart
+// Variables disponibles
 const String branchName = String.fromEnvironment('BRANCH_NAME', defaultValue: 'unknown');
+const String commitHash = String.fromEnvironment('COMMIT_HASH', defaultValue: '');
+const String commitMessage = String.fromEnvironment('COMMIT_MESSAGE', defaultValue: '');
+const String commitAuthor = String.fromEnvironment('COMMIT_AUTHOR', defaultValue: '');
+const String commitDate = String.fromEnvironment('COMMIT_DATE', defaultValue: '');
+
+// Uso básico
 Text('Branch: $branchName')
+Text('Commit: $commitHash - $commitMessage')
 ```
+
+**Para implementación completa**: Ver `FLUTTER_COMMIT_INFO_EXAMPLES.md` con 4 opciones de UI listas para usar.
 
 ---
 

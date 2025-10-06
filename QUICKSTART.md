@@ -1,5 +1,10 @@
 # 🚀 Guía de Inicio Rápido
 
+## RESUMEN
+Tener flutter instalado.
+Git pull <repo>.
+En powershell: .\launcher.ps1
+
 ## Configuración Inicial (Solo una vez)
 
 ### 1. Verificar Requisitos

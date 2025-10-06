@@ -66,6 +66,25 @@ Ejecuta las apps de **todos los branches simultáneamente**, cada uno en su prop
 .\run_vk_branches_parallel.ps1
 ```
 
+### 3. `run_single_branch.ps1` (Branch Específica) ⭐ NUEVO
+
+Permite **seleccionar una branch específica** para ejecutar y muestra **toda la información del commit**.
+
+**Ventajas:**
+- Testing enfocado en un solo branch
+- Muestra información completa del commit (mensaje, autor, fecha, hash)
+- Selector interactivo de branches
+- Perfecto para verificar un feature específico
+
+**Uso:**
+```powershell
+# Desde la carpeta MultiBranchTesting
+.\run_single_branch.ps1
+
+# O desde el launcher (opción 6)
+.\launcher.ps1
+```
+
 ## 📁 Estructura del Proyecto
 
 ```
@@ -99,19 +118,33 @@ MultiBranchTesting/
      - Instala dependencias
      - Ejecuta la app con el nombre del branch visible en el título de la ventana
 
-## 🏷️ Identificación de Branches
+## 🏷️ Identificación de Branches y Commits
 
-Cada ejecución de la app incluye el nombre del branch mediante:
-- **Título de la ventana**: Muestra "Flutter App - Branch: vk/nombre-del-branch"
-- **Variable DART_DEFINE**: Pasa `BRANCH_NAME` a la app de Flutter
+Cada ejecución de la app incluye información completa del branch y commit:
 
-Para usar el nombre del branch dentro de tu app Flutter:
+### Variables Disponibles en Flutter:
 ```dart
 const String branchName = String.fromEnvironment('BRANCH_NAME', defaultValue: 'unknown');
-
-// Úsalo en tu UI
-Text('Running branch: $branchName')
+const String commitHash = String.fromEnvironment('COMMIT_HASH', defaultValue: '');
+const String commitMessage = String.fromEnvironment('COMMIT_MESSAGE', defaultValue: '');
+const String commitAuthor = String.fromEnvironment('COMMIT_AUTHOR', defaultValue: '');
+const String commitDate = String.fromEnvironment('COMMIT_DATE', defaultValue: '');
 ```
+
+### Ejemplo Rápido:
+```dart
+// Banner simple con información del branch y commit
+Text('Branch: $branchName')
+Text('Commit: $commitHash - $commitMessage')
+Text('Autor: $commitAuthor ($commitDate)')
+```
+
+### Implementación Completa:
+Ver **`FLUTTER_COMMIT_INFO_EXAMPLES.md`** para 4 ejemplos completos con:
+- Banner superior con botón de detalles
+- Floating Action Button discreto
+- Drawer lateral completo
+- Bottom banner siempre visible
 
 ## 🔍 Branches Encontrados
 
