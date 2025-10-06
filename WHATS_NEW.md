@@ -10,10 +10,11 @@ El sistema ahora incluye **información completa del commit** en cada ejecución
 
 ### 1️⃣ **Nuevo Script: `run_single_branch.ps1`**
 
-Ejecuta una sola branch específica con información completa del commit.
+Ejecuta **CUALQUIER branch del repositorio** con información completa del commit.
 
 **Características:**
-- ✅ Selector interactivo de branches (muestra lista numerada)
+- ✅ Muestra TODAS las branches disponibles (no solo vk/*)
+- ✅ Selector interactivo con lista numerada y contador total
 - ✅ Información completa del commit en consola
 - ✅ Mensaje, autor, fecha, hash del commit
 - ✅ Lista de archivos modificados

@@ -68,13 +68,14 @@ Ejecuta las apps de **todos los branches simultáneamente**, cada uno en su prop
 
 ### 3. `run_single_branch.ps1` (Branch Específica) ⭐ NUEVO
 
-Permite **seleccionar una branch específica** para ejecutar y muestra **toda la información del commit**.
+Permite **seleccionar CUALQUIER branch del repositorio** para ejecutar y muestra **toda la información del commit**.
 
 **Ventajas:**
 - Testing enfocado en un solo branch
-- Muestra información completa del commit (mensaje, autor, fecha, hash)
-- Selector interactivo de branches
-- Perfecto para verificar un feature específico
+- Muestra TODAS las branches disponibles (no solo vk/*)
+- Información completa del commit (mensaje, autor, fecha, hash)
+- Selector interactivo de branches con contador
+- Perfecto para verificar cualquier feature o branch específica
 
 **Uso:**
 ```powershell

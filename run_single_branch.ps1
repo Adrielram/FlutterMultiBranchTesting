@@ -20,28 +20,28 @@ Write-Host ""
 # Cambiar al directorio del repositorio
 Set-Location $RepoPath
 
-# Obtener todas las branches vk/
+# Obtener TODAS las branches remotas (no solo vk/)
 Write-Host "Obteniendo branches disponibles..." -ForegroundColor $InfoColor
 git fetch --all 2>&1 | Out-Null
 
-$vkBranches = git branch -r | Select-String "origin/vk/" | ForEach-Object {
+$allBranches = git branch -r | Where-Object { $_ -notmatch "HEAD" } | ForEach-Object {
     $_.ToString().Trim() -replace "origin/", ""
 }
 
-if ($vkBranches.Count -eq 0) {
-    Write-Host "No se encontraron branches que empiecen con vk/" -ForegroundColor $ErrorColor
+if ($allBranches.Count -eq 0) {
+    Write-Host "No se encontraron branches remotas" -ForegroundColor $ErrorColor
     Set-Location ..
     exit 1
 }
 
 # Si no se especifico branch, mostrar menu
 if ([string]::IsNullOrEmpty($BranchName)) {
-    Write-Host "Branches disponibles:" -ForegroundColor $SuccessColor
+    Write-Host "Branches disponibles (Total: $($allBranches.Count)):" -ForegroundColor $SuccessColor
     Write-Host ""
     
     $index = 1
     $branchMap = @{}
-    foreach ($branch in $vkBranches) {
+    foreach ($branch in $allBranches) {
         Write-Host "  [$index] $branch" -ForegroundColor $InfoColor
         $branchMap[$index] = $branch
         $index++
