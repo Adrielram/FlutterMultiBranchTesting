@@ -30,6 +30,8 @@ Bienvenido al sistema de testing automatizado para múltiples branches de Flutte
 | **[VERIFICATION_COMPLETE.md](VERIFICATION_COMPLETE.md)** | ✅ Estado y verificación | **Ver primero** - Confirma que todo funciona |
 | **[QUICKSTART.md](QUICKSTART.md)** | Guía rápida de inicio | Primera vez usando el sistema |
 | **[README.md](README.md)** | Documentación principal | Para entender qué hace cada script |
+| **[FLUTTER_QUICKSTART_INFO.md](FLUTTER_QUICKSTART_INFO.md)** | ⚡ INICIO RÁPIDO | **VER BRANCH INFO en 2 minutos** |
+| **[FLUTTER_INTEGRATION_COMPLETE.md](FLUTTER_INTEGRATION_COMPLETE.md)** | ✅ INTEGRACIÓN COMPLETA | **Ya está integrado en tu app!** |
 | **[FLUTTER_COMMIT_INFO_EXAMPLES.md](FLUTTER_COMMIT_INFO_EXAMPLES.md)** | ⭐ Ejemplos Flutter NUEVOS | Mostrar branch y commit info en tu app |
 | **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** | Solución de problemas | Cuando algo no funciona |
 | **[ARCHITECTURE.md](ARCHITECTURE.md)** | Arquitectura del sistema | Para entender cómo funciona internamente |

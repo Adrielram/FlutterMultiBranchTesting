@@ -5,6 +5,8 @@ Este proyecto automatiza el testing de múltiples branches de Flutter que comien
 > 📚 **Navegación:** Para encontrar rápidamente lo que buscas, consulta el **[ÍNDICE DE DOCUMENTACIÓN](INDEX.md)**
 > 
 > 🚀 **¿Primera vez aquí?** Ve directo a **[QUICKSTART.md](QUICKSTART.md)**
+>
+> ⚡ **¿No ves info del branch en tu app?** Lee **[WHY_NO_INFO_VISIBLE.md](WHY_NO_INFO_VISIBLE.md)** y luego **[FLUTTER_QUICKSTART_INFO.md](FLUTTER_QUICKSTART_INFO.md)**
 
 ## 📋 Requisitos
 
