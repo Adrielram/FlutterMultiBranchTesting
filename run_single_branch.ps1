@@ -98,7 +98,7 @@ $commitHashFull = git rev-parse HEAD
 $commitMessage = git log -1 --pretty=%B
 $commitAuthor = git log -1 --pretty=%an
 $commitEmail = git log -1 --pretty=%ae
-$commitDate = git log -1 --pretty=%ad --date=format:`"%Y-%m-%d %H:%M:%S`"
+$commitDate = git log -1 --pretty=%ad --date=iso
 $commitDateRelative = git log -1 --pretty=%ar
 $filesChanged = git diff-tree --no-commit-id --name-only -r HEAD
 
@@ -106,34 +106,35 @@ $filesChanged = git diff-tree --no-commit-id --name-only -r HEAD
 Write-Host "============================================================" -ForegroundColor $InfoColor
 Write-Host "              INFORMACION DEL COMMIT                        " -ForegroundColor $InfoColor
 Write-Host "============================================================" -ForegroundColor $InfoColor
-Write-Host "| Branch:   $BranchName" -ForegroundColor $SuccessColor
-Write-Host "| Commit:   $commitHash ($commitHashFull)" -ForegroundColor $SuccessColor
-Write-Host "| Autor:    $commitAuthor <$commitEmail>" -ForegroundColor $SuccessColor
-Write-Host "| Fecha:    $commitDate ($commitDateRelative)" -ForegroundColor $SuccessColor
+Write-Host "Branch:   $BranchName" -ForegroundColor $SuccessColor
+Write-Host "Commit:   $commitHash" -ForegroundColor $SuccessColor
+Write-Host "Autor:    $commitAuthor <$commitEmail>" -ForegroundColor $SuccessColor
+Write-Host "Fecha:    $commitDate ($commitDateRelative)" -ForegroundColor $SuccessColor
 Write-Host "============================================================" -ForegroundColor $InfoColor
-Write-Host "| Mensaje del Commit:" -ForegroundColor $WarningColor
-Write-Host "|" -ForegroundColor $InfoColor
+Write-Host "Mensaje del Commit:" -ForegroundColor $WarningColor
+Write-Host ""
 
 # Mostrar mensaje del commit (puede ser multilinea)
 $commitMessage -split "`n" | ForEach-Object {
     $line = $_.Trim()
     if ($line.Length -gt 0) {
-        Write-Host "|   $line" -ForegroundColor White
+        Write-Host "  $line" -ForegroundColor White
     }
 }
 
+Write-Host ""
 Write-Host "============================================================" -ForegroundColor $InfoColor
-Write-Host "| Archivos Modificados en este Commit:" -ForegroundColor $WarningColor
-Write-Host "|" -ForegroundColor $InfoColor
+Write-Host "Archivos Modificados:" -ForegroundColor $WarningColor
+Write-Host ""
 
 if ($filesChanged) {
     $filesChanged -split "`n" | ForEach-Object {
         if ($_.Trim().Length -gt 0) {
-            Write-Host "|   - $_" -ForegroundColor Gray
+            Write-Host "  - $_" -ForegroundColor Gray
         }
     }
 } else {
-    Write-Host "|   (No hay archivos modificados o es el primer commit)" -ForegroundColor Gray
+    Write-Host "  (No hay archivos modificados o es el primer commit)" -ForegroundColor Gray
 }
 
 Write-Host "============================================================" -ForegroundColor $InfoColor
@@ -168,7 +169,9 @@ Write-Host ""
 # Ejecutar Flutter con toda la informacion del commit
 # Escapar caracteres especiales para evitar problemas
 $safeCommitMessage = $commitMessage -replace "`"", """""" -replace "`n", " " -replace "`r", ""
-$safeCommitMessage = $safeCommitMessage.Substring(0, [Math]::Min($safeCommitMessage.Length, 500))
+if ($safeCommitMessage.Length -gt 500) {
+    $safeCommitMessage = $safeCommitMessage.Substring(0, 500)
+}
 
 flutter run --dart-define=BRANCH_NAME=$BranchName --dart-define=COMMIT_HASH=$commitHash --dart-define=COMMIT_HASH_FULL=$commitHashFull --dart-define=COMMIT_MESSAGE=$safeCommitMessage --dart-define=COMMIT_AUTHOR=$commitAuthor --dart-define=COMMIT_EMAIL=$commitEmail --dart-define=COMMIT_DATE=$commitDate --dart-define=COMMIT_DATE_RELATIVE=$commitDateRelative
 
